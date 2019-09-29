@@ -13,3 +13,7 @@ RUN git clone https://github.com/KellyGithubID/hoc.git
 WORKDIR /hoc
 RUN gem build hoc.gemspec
 RUN gem install --local hoc-1.0.snapshot.gem
+
+COPY . /app/Code-Checker
+
+WORKDIR /app/Code-Checker
