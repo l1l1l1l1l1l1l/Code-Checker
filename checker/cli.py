@@ -4,6 +4,8 @@ import argparse
 import functools
 import sys
 
+from checker.repo_checker.repo import GitRepo
+
 _COMMAND2HANDLER = {}
 
 PARSER = argparse.ArgumentParser()
@@ -12,7 +14,7 @@ SUBPARSERS = PARSER.add_subparsers(help='sub-command help',
 
 REPO = SUBPARSERS.add_parser('repo', help='repo status check')
 REPO_PARSERS = REPO.add_subparsers(help='sub-repo-command help',
-                                     dest='repo-subparser_name')
+                                   dest='repo-subparser_name')
 
 COMMIT = REPO_PARSERS.add_parser('commit', help='get commit number by date')
 COMMIT.add_argument('-b',
@@ -39,7 +41,7 @@ def command(name):
 @command('repo')
 @command('commit')
 def sub_command_repo_commit(args):
-    print(args)
+    print(GitRepo(args.basepath).calculate_commits())
 
 
 if __name__ == "__main__":

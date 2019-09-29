@@ -5,6 +5,7 @@ RUN apk update
 
 # Install dependence
 RUN apk add --upgrade --no-cache git bash ruby ruby-rdoc
+RUN pip3 install gitpython
 
 # Install hits-of-code
 WORKDIR /
@@ -15,5 +16,5 @@ RUN gem build hoc.gemspec
 RUN gem install --local hoc-1.0.snapshot.gem
 
 COPY . /app/Code-Checker
-
 WORKDIR /app/Code-Checker
+RUN export PYTHONPATH=.
