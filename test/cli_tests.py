@@ -14,3 +14,7 @@ class TestUtils(unittest.TestCase):
         command('new-command')(command_handler)
 
         self.assertEqual('new-command', _COMMAND2HANDLER['new-command']())
+
+
+if __name__ == '__main__':
+    unittest.main()
