@@ -12,11 +12,7 @@ PARSER = argparse.ArgumentParser()
 SUBPARSERS = PARSER.add_subparsers(help='sub-command help',
                                    dest='subparser_name')
 
-REPO = SUBPARSERS.add_parser('repo', help='repo status check')
-REPO_PARSERS = REPO.add_subparsers(help='sub-repo-command help',
-                                   dest='repo-subparser_name')
-
-COMMIT = REPO_PARSERS.add_parser('commit', help='get commit number by date')
+COMMIT = SUBPARSERS.add_parser('commit', help='get commit information of repo by date')
 COMMIT.add_argument('-b',
                     '--basepath',
                     metavar='BASEPATH',
@@ -38,14 +34,13 @@ def command(name):
     return wrapper
 
 
-@command('repo')
 @command('commit')
 def sub_command_repo_commit(args):
-    print(GitRepo(args.basepath).calculate_commits())
+    GitRepo(args.basepath).print_commit_info()
 
 
 if __name__ == "__main__":
-    if len(sys.argv) < 4:
+    if len(sys.argv) < 3:
         sys.argv.append('-h')
     args = PARSER.parse_args()
     _COMMAND2HANDLER[args.subparser_name](args)

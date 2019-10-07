@@ -24,6 +24,9 @@ class GitTests(unittest.TestCase):
     def tearDown(self):
         shutil.rmtree(OUTPUT, ignore_errors=True)
 
-    def test_calculate_commits(self):
-        right_result = [{'2019-09-30': 2}]
-        self.assertEqual(right_result, self.test_repo.calculate_commits())
+    def test_commit_info(self):
+        right_result = [['2019-10-07', 5, 10], ['2019-09-30', 2, 4]]
+        self.assertEqual(right_result, self.test_repo.commit_info())
+
+    def test_last_day(self):
+        self.assertEqual('2018-12-31', repo.last_day('2019-01-01'))
