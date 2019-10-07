@@ -17,4 +17,4 @@ RUN gem install --local hoc-1.0.snapshot.gem
 
 COPY . /app/Code-Checker
 WORKDIR /app/Code-Checker
-RUN export PYTHONPATH=.
+ENV PYTHONPATH "."
