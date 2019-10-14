@@ -8,12 +8,7 @@ RUN apk add --upgrade --no-cache git bash ruby ruby-rdoc
 RUN pip3 install gitpython
 
 # Install hits-of-code
-WORKDIR /
-RUN gem install slop
-RUN git clone https://github.com/KellyGithubID/hoc.git
-WORKDIR /hoc
-RUN gem build hoc.gemspec
-RUN gem install --local hoc-1.0.snapshot.gem
+RUN gem install hoc
 
 COPY . /app/Code-Checker
 WORKDIR /app/Code-Checker
