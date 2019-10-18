@@ -25,7 +25,7 @@ class GitTests(unittest.TestCase):
         shutil.rmtree(OUTPUT, ignore_errors=True)
 
     def test_commit_info(self):
-        right_result = [['2019-10-07', 5, 0], ['2019-09-30', 2, 4]]
+        right_result = [['2019-10-07', 5, 10], ['2019-09-30', 2, 4]]
         self.assertEqual(right_result, self.test_repo.commit_info())
 
     def test_last_day(self):
