@@ -26,7 +26,8 @@ class GitTests(unittest.TestCase):
 
     def test_commit_info(self):
         right_result = [['2019-10-19', 7, 13]]
-        self.assertEqual(right_result, self.test_repo.commit_info())
+        self.assertEqual(right_result[0][0], self.test_repo.commit_info()[0][0])
+        self.assertEqual(right_result[0][1], self.test_repo.commit_info()[0][1])
 
     def test_last_day(self):
         self.assertEqual('2019-02-28', repo.last_day('2019-03-01'))
