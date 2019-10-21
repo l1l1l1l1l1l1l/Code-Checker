@@ -6,6 +6,7 @@ RUN apk update
 # Install dependence
 RUN apk add --upgrade --no-cache git bash ruby ruby-rdoc
 RUN pip3 install gitpython
+RUN pip3 install bandit
 
 # Install hits-of-code
 RUN gem install hoc
