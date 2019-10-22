@@ -6,14 +6,14 @@ import tarfile
 import os.path as p
 
 from checker.cli import PARSER
-from checker.vulnsChecker.vulns import main
+from checker.vulnsChecker.vulns import vulnsCheck
 
-RESOURCES = p.join(p.dirname(p.abspath(__file__)), 'resources')
+RESOURCES = p.join(p.dirname(p.abspath(__file__)), 'resources/vulns/')
 OUTPUT = p.join(RESOURCES, 'tmp/pydo/')
 INPUTFILE = p.join(RESOURCES, 'pydo.tgz')
 
-TESTRESULT = p.dirname(p.abspath(__file__)) + '/testResult.html'
-TRUERESULT = p.dirname(p.abspath(__file__)) + '/trueResult.html'
+TESTRESULT = RESOURCES + 'testResult.html'
+TRUERESULT = RESOURCES + 'trueResult.html'
 
 
 class VulnsTest(unittest.TestCase):
@@ -25,7 +25,7 @@ class VulnsTest(unittest.TestCase):
         pydoFiles.extractall(path=OUTPUT)
         args = PARSER.parse_args(['vulns','-q','-r','-f','html','-o',TESTRESULT,'OUTPUT'])
         try: 
-            main(args)
+            vulnsCheck(args)
         except:
             pass    
 
@@ -35,7 +35,7 @@ class VulnsTest(unittest.TestCase):
 
     def testResult(self):
         if not os.path.isfile(TESTRESULT):
-            self.fail("no output result file existing")
+            self.fail("no output result file found")
         self.assertTrue(filecmp.cmp(TESTRESULT,TRUERESULT))
 
 

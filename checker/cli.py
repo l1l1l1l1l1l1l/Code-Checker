@@ -8,7 +8,7 @@ from checker.repo_checker.repo import GitRepo
 
 from checker.vulnsChecker.vulns import _init_extensions
 import bandit
-from checker.vulnsChecker.vulns import main
+from checker.vulnsChecker.vulns import vulnsCheck
 
 _COMMAND2HANDLER = {}
 
@@ -173,7 +173,7 @@ def sub_command_repo_commit(args):
 
 @command('vulns')
 def sub_command_vulns(args):
-    main(args)
+    vulnsCheck(args)
 
 if __name__ == "__main__":
     if len(sys.argv) < 3:

@@ -114,7 +114,7 @@ def _log_info(args, profile):
 
 
 
-def main(args):
+def vulnsCheck(args):
     debug = (logging.DEBUG if '-d' in sys.argv or '--debug' in sys.argv else
             logging.INFO)
     _init_logger(debug)
