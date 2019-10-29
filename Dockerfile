@@ -7,6 +7,7 @@ RUN apk update
 RUN apk add --upgrade --no-cache git bash ruby ruby-rdoc
 RUN pip3 install gitpython
 RUN pip3 install bandit
+RUN pip3 install coverage
 
 # Install hits-of-code
 RUN gem install hoc
@@ -14,3 +15,4 @@ RUN gem install hoc
 COPY . /app/Code-Checker
 WORKDIR /app/Code-Checker
 ENV PYTHONPATH "."
+RUN chmod -R 777 ./test/coverage.sh
