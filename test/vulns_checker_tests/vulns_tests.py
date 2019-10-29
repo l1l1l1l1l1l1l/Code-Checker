@@ -6,7 +6,7 @@ import tarfile
 import os.path as p
 
 from checker.cli import PARSER
-from checker.vulnsChecker.vulns import vulnsCheck
+from checker.vulns_checker.vulns import vulnsCheck
 
 RESOURCES = p.join(p.dirname(p.abspath(__file__)), 'resources/vulns/')
 OUTPUT = p.join(RESOURCES, 'tmp/pydo/')

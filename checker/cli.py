@@ -6,9 +6,9 @@ import sys
 
 from checker.repo_checker.repo import GitRepo
 
-from checker.vulnsChecker.vulns import _init_extensions
+from checker.vulns_checker.vulns import _init_extensions
 import bandit
-from checker.vulnsChecker.vulns import vulnsCheck
+from checker.vulns_checker.vulns import vulnsCheck
 
 _COMMAND2HANDLER = {}
 
