@@ -25,7 +25,7 @@ class CoverageTests(unittest.TestCase):
         shutil.rmtree(OUTPUT, ignore_errors=True)
 
     def test_coverage_rate(self):
-        self.assertEqual(73, int(self.example.coverage_rate() + 0.5))
+        self.assertEqual(74, int(self.example.coverage_rate(REPO_PATH) + 0.5))
 
 
 if __name__ == '__main__':

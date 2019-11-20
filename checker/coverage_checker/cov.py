@@ -2,6 +2,8 @@ import unittest
 import coverage
 import os.path as p
 
+from coverage import CoverageException
+
 
 class Coverage:
     def __init__(self, repo_path: str = './'):
@@ -21,8 +23,10 @@ class Coverage:
 
         cov.stop()
         cov.save()
-
-        return cov.html_report(directory=output_path)
+        try:
+            return cov.html_report(directory=output_path)
+        except CoverageException:
+            return 0
 
 
 if __name__ == '__main__':
