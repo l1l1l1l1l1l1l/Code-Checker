@@ -1,51 +1,92 @@
 # /usr/bin/python3
 
 import argparse
-import functools
 import sys
 import bandit
 
-from checker.repo_checker.repo import GitRepo
+from checker.complexityChecker.complexity import flake8
+from checker.pylint_checker.pylint import comm
+from checker.coverage_checker.cov import Coverage
 
-from checker.vulns_checker.vulns import Check
 
-_COMMAND2HANDLER = {}
-
+def str2bool(v):
+    if v.lower() in ('yes', 'true', 't', 'y', '1'):
+        return True
+    elif v.lower() in ('no', 'false', 'f', 'n', '0'):
+        return False
+    else:
+        raise argparse.ArgumentTypeError('Unsupported value encountered.')
 
 
 PARSER = argparse.ArgumentParser()
-SUBPARSERS = PARSER.add_subparsers(help='sub-command help',
-                                   dest='subparser_name')
 
-COMMIT = SUBPARSERS.add_parser('commit', help='get commit information of repo by date')
-COMMIT.add_argument('-b',
+PARSER.add_argument('-b',
                     '--basepath',
                     metavar='BASEPATH',
                     type=str,
                     help='local basepath of repo',
                     required=True)
 
+PARSER.add_argument('-cov',
+                    '--coverage',
+                    type=str2bool,
+                    nargs='?',
+                    const=True,
+                    metavar='COVERAGE',
+                    help='check coverage of repo')
 
-def command(name):
-    def wrapper(func):
-        @functools.wraps(func)
-        def handler_wrap(*args, **kwargs):
-            return func(*args, **kwargs)
+PARSER.add_argument('-s',
+                    '--code_style',
+                    type=str2bool,
+                    nargs='?',
+                    const=True,
+                    metavar='code_style',
+                    help='check code style of repo')
 
-        _COMMAND2HANDLER[name] = handler_wrap
+PARSER.add_argument('-cmp',
+                    '--complexity',
+                    type=str2bool,
+                    nargs='?',
+                    const=True,
+                    metavar='complexity',
+                    help='check code complexity of repo')
 
-        return handler_wrap
+PARSER.add_argument('-v',
+                    '--vulnerability',
+                    type=str2bool,
+                    nargs='?',
+                    const=True,
+                    metavar='vulnerability',
+                    help='check vulnerability of repo')
 
-    return wrapper
+PARSER.add_argument('-o',
+                    '--output',
+                    metavar='OUPTUT_DIR',
+                    type=str,
+                    help='output path',
+                    default='')
 
 
-@command('commit')
-def sub_command_repo_commit(args):
-    GitRepo(args.basepath).print_commit_info()
+def run_command(args):
+    score = 0
+    count = 0
+    if args.coverage is True:
+        score = score + Coverage(args.basepath).coverage_rate()
+        count = count + 1
+    if args.code_style is True:
+        score = score + comm(args.basepath)
+        count = count + 1
+    if args.complexity is True:
+        score = score + flake8(args.basepath)
+        count = count + 1
+    if args.vulnerability is True:
+        # TODO score = score + returned value of vulns
+        count = count + 1
+    print(score / max(count, 1))
 
 
 if __name__ == "__main__":
-    if len(sys.argv) < 3:
+    if len(sys.argv) < 2:
         sys.argv.append('-h')
     args = PARSER.parse_args()
-    _COMMAND2HANDLER[args.subparser_name](args)
+    run_command(args)

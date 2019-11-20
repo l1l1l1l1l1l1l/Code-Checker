@@ -32,3 +32,7 @@ class GitTests(unittest.TestCase):
     def test_last_day(self):
         self.assertEqual('2019-02-28', repo.last_day('2019-03-01'))
         self.assertEqual('2016-02-29', repo.last_day('2016-03-01'))
+
+
+if __name__ == '__main__':
+    unittest.main()
