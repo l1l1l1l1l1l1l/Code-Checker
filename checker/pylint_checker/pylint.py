@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # @Time    : 2019/10/22 22:33
 # @Author  : LIU YUE
-# @File    : pylint.py.py
+# @File    : pylint.py
 
 import os
 
@@ -19,15 +19,30 @@ def get_py_files(testDir, fileType, fileNames):
     return fileNames
 
 
-# 调用命令行得到结果, 入参filename是带完整目录的
+# call command to get result
 def comm(filename):
     command = 'pylint ' + filename
     result = os.popen(command)
     info = result.readlines()
-    print("{}的pylint结果：".format(filename))
-    for line in info:  # 按行遍历
+    grade = 0
+    for line in info:
         line = line.strip('\r\n')
         # print(line)
         if line.startswith('Your code has been rated at'):
-            grade = line[28: 32]
-    return grade
+            grade = float(line[28: 32])
+    return info, grade
+
+
+# define the parameters
+def pylint(testDir):
+    fileType = 'py'
+    fileNames = []
+    fileNames = get_py_files(testDir, fileType, fileNames)
+    grade_all = 0
+    py_result = []
+    for i in range(len(fileNames)):
+        result, grade = comm(fileNames[i])
+        py_result.append(result)
+        grade_all = grade_all + grade
+    # np.savetxt('PylintResult.txt',py_result)
+    return grade_all/len(fileNames), py_result

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # @Time    : 2019/10/22 22:28
 # @Author  : LIU YUE
-# @File    : slc.py.py
+# @File    : slc.py
 
 import os
 
@@ -19,14 +19,27 @@ def get_py_files(testDir, fileType, fileNames):
     return fileNames
 
 
-# 统计一个文件的行数
-def slo(filename):
+# calculate source lines of code
+def calculate_slo(filename):
     source_lines = 0
     annotation_lines = 0
     for line in open(filename).readlines():
-        if line != '' and line != '\n':  # 过滤掉空行
+        if line != '' and line != '\n':
             source_lines += 1
-        if line.startswith('#'):  # 统计注释行
+        if line.startswith('#'):
             annotation_lines += 1
-    print('{}-----slc={},alc={}'.format(filename, source_lines, annotation_lines))
+    # print('{}-----slc={},alc={}'.format(filename, source_lines, annotation_lines))
     return source_lines, annotation_lines
+
+
+# define the parameters
+def slc(testDir):
+    fileType = 'py'
+    fileNames = []
+    fileNames = get_py_files(testDir, fileType, fileNames)
+    slc = 0
+    for i in range(len(fileNames)):
+        source_lines, annotation_lines = calculate_slo(fileNames[i])
+        # result[i] = '{}-----slc={},alc={}'.format(fileNames[i], source_lines, annotation_lines)
+        slc = slc + source_lines
+    return slc
