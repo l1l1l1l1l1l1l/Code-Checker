@@ -2,6 +2,7 @@
 
 import argparse
 import sys
+import bandit
 
 from checker.complexityChecker.complexity import flake8
 from checker.pylint_checker.pylint import comm
@@ -79,7 +80,7 @@ def run_command(args):
         score = score + flake8(args.basepath)
         count = count + 1
     if args.vulnerability is True:
-        #TODO score = score + returned value of vulns
+        # TODO score = score + returned value of vulns
         count = count + 1
     print(score / max(count, 1))
 
