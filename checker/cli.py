@@ -4,9 +4,9 @@ import argparse
 import sys
 import bandit
 
-#from checker.complexityChecker.complexity import flake8
-#from checker.pylint_checker.pylint import comm
-#from checker.coverage_checker.cov import Coverage
+from checker.complexityChecker.complexity import flake8
+from checker.pylint_checker.pylint import comm
+from checker.coverage_checker.cov import Coverage
 from vulns_checker.vulns import Check as vulnsCheck
 
 
