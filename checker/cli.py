@@ -71,7 +71,10 @@ PARSER.add_argument('-o',
 def run_command(args):
     score = 0
     count = 0
+<<<<<<< HEAD
     # TODO: set lines_of_codes to correct value for each repo
+=======
+>>>>>>> da1d
     lines_of_codes = 12722
     if args.coverage is True:
         score = score + Coverage(args.basepath).coverage_rate()

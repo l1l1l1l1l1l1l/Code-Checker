@@ -1,4 +1,5 @@
 import subprocess
+import sys
 import csv
 from io import StringIO
 
@@ -9,6 +10,7 @@ from io import StringIO
 # @return score: int ranged from 0 to 100, 100 is best, 0 is worst in terms of code quality
 # @return output: string detailed output from bandit, in csv format
 def Check(tarRepo, loc):
+    loc = int(loc)
     output = subprocess.run(['python3', '-m', 'bandit', '-r', tarRepo,
                              '-q', '-f', 'csv'], stdout=subprocess.PIPE).stdout.decode('utf-8')
     reader = csv.reader(StringIO(output), delimiter=',')
@@ -30,3 +32,9 @@ def Check(tarRepo, loc):
         # if no more than 5 points found, then score if 100 minus penalty
         score = int((1 - penalty / (loc * 0.05)) * 100)
     return score, output
+
+
+if __name__ == '__main__':
+    score, output = Check(sys.argv[1], sys.argv[2])
+    print(score)
+    print(output)

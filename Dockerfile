@@ -8,6 +8,7 @@ RUN apk add --upgrade --no-cache git bash ruby ruby-rdoc
 RUN pip3 install gitpython
 RUN pip3 install bandit
 RUN pip3 install coverage
+RUN pip3 install flake8
 
 # Install hits-of-code
 RUN gem install hoc
