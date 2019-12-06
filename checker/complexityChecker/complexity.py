@@ -2,6 +2,9 @@ import os
 
 #example of dir = 'd:\mccabe'
 #get score of cyclomatic complexity
+import sys
+
+
 def get_score(dir):
     command = 'flake8 --max-complexity 0 ' + dir
     result = os.popen(command)
@@ -46,7 +49,7 @@ def get_score(dir):
 
 # get the string for complexity of functions
 def get_complexity(dir):
-    command = 'flake8 --max-complexity 4 ' + dir
+    command = 'flake8 --max-complexity 6 ' + dir
     result = os.popen(command)
     info = result.readlines()
     return info
@@ -84,3 +87,6 @@ def get_funcs_num(dir):
                 countNotice6 = countNotice6 + 1
 
     return str(countPass) + "," + str(countNotice6+countNotice7+countNotice8+countNotice9) + "," + str(countAlert)
+
+if __name__ == '__main__':
+    print(get_complexity(sys.argv[1]))
