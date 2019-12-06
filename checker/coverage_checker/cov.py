@@ -1,9 +1,10 @@
+import sys
 import unittest
 import coverage
 import os.path as p
 
 from coverage import CoverageException
-
+from checker.repo_checker.repo import GitRepo
 
 class Coverage:
     def __init__(self, repo_path: str = './'):
@@ -24,10 +25,15 @@ class Coverage:
         cov.stop()
         cov.save()
         try:
+            cov.report()
             return cov.html_report(directory=output_path)
         except CoverageException:
             return 0
 
 
 if __name__ == '__main__':
-    print(Coverage(f'{p.dirname(p.abspath(__file__))}/../../').coverage_rate())
+    print('Repo Info:')
+    GitRepo(sys.argv[1]).print_commit_info()
+    print('Coverage:')
+    score = Coverage(sys.argv[1]).coverage_rate()
+    print(score)

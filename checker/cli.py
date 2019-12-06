@@ -7,6 +7,7 @@ import bandit
 from checker.complexityChecker.complexity import flake8
 from checker.pylint_checker.pylint import comm
 from checker.coverage_checker.cov import Coverage
+from vulns_checker.vulns import Check as vulnsCheck
 
 
 def str2bool(v):
@@ -70,6 +71,7 @@ PARSER.add_argument('-o',
 def run_command(args):
     score = 0
     count = 0
+    lines_of_codes = 12722
     if args.coverage is True:
         score = score + Coverage(args.basepath).coverage_rate()
         count = count + 1
@@ -80,7 +82,8 @@ def run_command(args):
         score = score + flake8(args.basepath)
         count = count + 1
     if args.vulnerability is True:
-        # TODO score = score + returned value of vulns
+        s, _ = vulnsCheck(args.basepath, lines_of_codes)
+        score += s
         count = count + 1
     print(score / max(count, 1))
 
